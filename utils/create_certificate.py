@@ -80,6 +80,7 @@
 
 import os
 import subprocess
+import shutil  # Import the shutil module for file operations
 
 from docx import Document
 from docx.shared import Pt
@@ -147,18 +148,18 @@ def create_certificate(user_id, test_id, fullname, science, class_num, date):
     # Output directory for the PDF file
     output_directory = 'data/images'
 
-    # Ensure the output directory exists
-    # os.makedirs(output_directory, exist_ok=True)
-
     # Save the modified document
     word_file_name = f"data/images/{user_id}{test_id}.docx"
     pdf_file_name = f"data/images/{user_id}{test_id}.pdf"
     doc.save(word_file_name)
-    # doc.save(os.path.join(output_directory, word_file_name))
 
     # Use unoconv to convert the DOCX to PDF
     try:
         subprocess.run(['unoconv', '-f', 'pdf', '-o', output_directory, word_file_name])
+
+        # Rename the output PDF file to its final name using shutil
+        shutil.move(os.path.join(output_directory, f"{user_id}{test_id}.pdf"), pdf_file_name)
+
         os.remove(word_file_name)
     except Exception as xatolik:
         print(f"Error converting to PDF: {xatolik}")
