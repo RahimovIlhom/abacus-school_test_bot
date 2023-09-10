@@ -366,15 +366,15 @@ async def check_responses_test(call: CallbackQuery, state: FSMContext):
             if premium:
                 confirm_text += "\n\nSizni sertifikat bilan tabriklaymiz 🥳️"
                 fullname = db.select_user(user_id=call.from_user.id)[1]
-                await call.message.answer(confirm_text,
-                                          reply_markup=await certificate_download(call.from_user.id, test_id))
+                await call.message.answer(confirm_text)
                 photo = create_certificate(call.from_user.id, test_id, fullname, science, class_number,
                                            now.date())
                 with open(photo, 'rb') as file:
                     message_id = await bot.send_document('5232052738', document=file, caption='sertifikat')
                     certificate = message_id.document.file_id
-                    await message_id.delete()
                 db.stop_progress_solvedtest(call.from_user.id, test_id, ball, certificate=certificate)
+                await call.message.edit_reply_markup(
+                                          reply_markup=await certificate_download(call.from_user.id, test_id))
                 try:
                     os.remove(photo)
                 except OSError as xatolik:
