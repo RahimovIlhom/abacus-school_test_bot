@@ -60,7 +60,8 @@ async def list_tests(call: CallbackQuery, state: FSMContext, premium, science_id
     else:
         info = "✍🏻 Testni yechish uchun testni tanlang!\n\n‼️ Eslatma.\n\n" \
                "Sertifikat faqat pullik testlarni yechgan foydalanuvchilar uchun beriladi"
-    await call.message.edit_text(info, reply_markup=await tests_keyboards(call.from_user.id, premium, science_id, class_id))
+    await call.message.edit_text(info,
+                                 reply_markup=await tests_keyboards(call.from_user.id, premium, science_id, class_id))
 
 
 async def check_confirm(call: CallbackQuery, state: FSMContext, premium, science_id, class_id, item_id, **kwargs):
@@ -125,7 +126,9 @@ async def transfer_await(call: CallbackQuery, state: FSMContext, science_id, cla
     if transfer_type == 'karta':
         await call.message.answer(f"💳 Karta raqami: <tg-spoiler>{karta}</tg-spoiler>\n"
                                   f"👤 Karta egasi: <b>{karta_name}</b>\n\n"
-                                  f"O'tkazmani amalga oshiring va o'tkazma chekini yuboring 📮", )
+                                  f"O'tkazmani amalga oshiring va o'tkazma chekini yuboring 📮",
+                                  reply_markup=await transfer_success_keyboards(science_id, class_id, item_id,
+                                                                                price, transfer_type))
     else:
         await call.message.answer_document(doc_id,
                                            caption="QR Code ni skaner qiling yoki quyidagi <b>📲 Ilovaga o'tish</b> tugmasini bosing!\n\n"
@@ -365,7 +368,8 @@ async def check_responses_test(call: CallbackQuery, state: FSMContext):
                 fullname = db.select_user(user_id=call.from_user.id)[1]
                 await call.message.answer(confirm_text,
                                           reply_markup=await certificate_download(call.from_user.id, test_id))
-                photo = await create_certificate(call.from_user.id, test_id, fullname, science, class_number, now.date())
+                photo = create_certificate(call.from_user.id, test_id, fullname, science, class_number,
+                                           now.date())
                 with open(photo, 'rb') as file:
                     message_id = await bot.send_document('5232052738', document=file, caption='sertifikat')
                     certificate = message_id.document.file_id
