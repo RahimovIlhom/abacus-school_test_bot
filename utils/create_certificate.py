@@ -94,7 +94,7 @@ def create_certificate(user_id, test_id, fullname, science, class_num, date):
 
     # Define the text to replace and the replacement text
     text_to_find1 = "fullname"
-    text_to_find2 = "science fani class_num-sinf testini muvaffaqiyatli"
+    text_to_find2 = "science fani class_num-sinf testini"
     text_to_find3 = "date_time"
 
     text2 = text_to_find2.replace('science', science).replace('class_num', f"{class_num}")
