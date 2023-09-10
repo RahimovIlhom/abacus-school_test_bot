@@ -108,7 +108,7 @@ def create_certificate(user_id, test_id, fullname, science, class_num, date):
             # Format the text
             for run in paragraph.runs:
                 run.font.name = 'DejaVu Sans'
-                run.font.size = Pt(40)
+                run.font.size = Pt(35)
                 run.bold = True
                 run.italic = True
                 run.underline = True
@@ -123,7 +123,7 @@ def create_certificate(user_id, test_id, fullname, science, class_num, date):
             # Format the text
             for run in paragraph.runs:
                 run.font.name = 'DejaVu Sans'
-                run.font.size = Pt(24)
+                run.font.size = Pt(20)
                 run.bold = True
                 run.underline = False
                 run.font.color.rgb = RGBColor(0, 0, 128)
@@ -155,13 +155,9 @@ def create_certificate(user_id, test_id, fullname, science, class_num, date):
 
     # Use unoconv to convert the DOCX to PDF
     try:
-        subprocess.run(['unoconv', '-f', 'pdf', '-o', output_directory, word_file_name])
-
-        # Rename the output PDF file to its final name using shutil
-        shutil.move(os.path.join(output_directory, f"{user_id}{test_id}.pdf"), pdf_file_name)
-
+        subprocess.run(["unoconv", "-f", "pdf", word_file_name])
         os.remove(word_file_name)
     except Exception as xatolik:
-        print(f"Error converting to PDF: {xatolik}")
+        print(f"PDF ga o'girishda xatolik: {xatolik}")
 
     return pdf_file_name
