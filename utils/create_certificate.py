@@ -7,13 +7,13 @@
 # import os
 #
 #
-# async def create_certificate(user_id, test_id, fullname, science, class_num, date):
+# def create_certificate(user_id, test_id, fullname, science, class_num, date):
 #     # Load the Word document
 #     doc = Document("data/images/certificate.docx")
 #
 #     # Define the text to replace and the replacement text
 #     text_to_find1 = "fullname"
-#     text_to_find2 = "science fani class_num-sinf testini muvaffaqiyatli yechganligi uchun taqdirlanadi"
+#     text_to_find2 = "science fani class_num-sinf testini muvaffaqiyatli"
 #     text_to_find3 = "date_time"
 #
 #     text2 = text_to_find2.replace('science', science).replace('class_num', f"{class_num}")
@@ -26,9 +26,10 @@
 #
 #             # Format the text
 #             for run in paragraph.runs:
-#                 run.font.name = 'Monotype Corsiva'
-#                 run.font.size = Pt(60)
+#                 run.font.name = 'DejaVu Sans'
+#                 run.font.size = Pt(40)
 #                 run.bold = True
+#                 run.italic = True
 #                 run.underline = True
 #                 run.font.color.rgb = RGBColor(0, 0, 128)
 #             # Optional: Center-align the paragraph
@@ -40,7 +41,7 @@
 #
 #             # Format the text
 #             for run in paragraph.runs:
-#                 run.font.name = 'Forte'
+#                 run.font.name = 'DejaVu Sans'
 #                 run.font.size = Pt(24)
 #                 run.bold = True
 #                 run.underline = False
@@ -92,7 +93,7 @@ def create_certificate(user_id, test_id, fullname, science, class_num, date):
 
     # Define the text to replace and the replacement text
     text_to_find1 = "fullname"
-    text_to_find2 = "science fani class_num-sinf testini muvaffaqiyatli yechganligi uchun taqdirlanadi"
+    text_to_find2 = "science fani class_num-sinf testini muvaffaqiyatli"
     text_to_find3 = "date_time"
 
     text2 = text_to_find2.replace('science', science).replace('class_num', f"{class_num}")
@@ -147,18 +148,19 @@ def create_certificate(user_id, test_id, fullname, science, class_num, date):
     output_directory = 'data/images'
 
     # Ensure the output directory exists
-    os.makedirs(output_directory, exist_ok=True)
+    # os.makedirs(output_directory, exist_ok=True)
 
     # Save the modified document
-    word_file_name = f"{user_id}{test_id}.docx"
-    pdf_file_name = f"{user_id}{test_id}.pdf"
-    doc.save(os.path.join(output_directory, word_file_name))
+    word_file_name = f"data/images/{user_id}{test_id}.docx"
+    pdf_file_name = f"data/images/{user_id}{test_id}.pdf"
+    doc.save(word_file_name)
+    # doc.save(os.path.join(output_directory, word_file_name))
 
     # Use unoconv to convert the DOCX to PDF
     try:
-        subprocess.run(['unoconv', '-f', 'pdf', '-o', output_directory, os.path.join(output_directory, word_file_name)])
-        os.remove(os.path.join(output_directory, word_file_name))
+        subprocess.run(['unoconv', '-f', 'pdf', '-o', output_directory, word_file_name])
+        os.remove(word_file_name)
     except Exception as xatolik:
         print(f"Error converting to PDF: {xatolik}")
 
-    return os.path.join(output_directory, pdf_file_name)
+    return pdf_file_name
