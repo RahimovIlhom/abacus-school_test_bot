@@ -64,6 +64,26 @@ async def click_test(call: types.CallbackQuery, callback_data: dict, state: FSMC
     await DeActiveTestStates.next()
 
 
+@dp.callback_query_handler(text="statistics", state=DeActiveTestStates.test)
+async def activate_test(call: types.CallbackQuery, state: FSMContext):
+    await call.message.edit_reply_markup()
+    async with state.proxy() as data:
+        test_id = data.get('test_id')
+        class_num = data.get('class_num')
+        science = data.get('science')
+    result = db.select_test_solved_tests(test_id)
+    result_info = f"{science} fani {class_num}-sinf uchun test natijalari:\n"
+    i = 1
+    for user_test in result:
+        user = db.select_user(user_test[9])
+        result_info += f"{i}. {user[1]} - {user_test[5]} ball 👉 {user[3]} - tel: {user[2]}\n"
+        print(user)
+        i += 1
+    await call.message.answer(f"{result_info}", reply_markup=admin_panel_buttons)
+    await state.reset_data()
+    await state.finish()
+
+
 @dp.callback_query_handler(text="deactivate", state=DeActiveTestStates.test)
 async def activate_test(call: types.CallbackQuery, state: FSMContext):
     async with state.proxy() as data:
