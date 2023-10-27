@@ -83,7 +83,8 @@ async def activate_test(call: types.CallbackQuery, state: FSMContext):
     i = 1
     for user_test in result:
         user = db.select_user(user_test[9])
-        result_info += f"{i}. {user[1]} - {user_test[5]} ball 👉 {user[3]}\n"
+        result_info += f"{i}. {user[1]} - {user_test[5]} ball 👉 {user[3]} - tel: {user[2]}\n"
+        print(user)
         i += 1
     await call.message.answer(f"{result_info}", reply_markup=admin_panel_buttons)
     await state.reset_data()
