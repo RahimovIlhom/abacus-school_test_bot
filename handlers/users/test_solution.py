@@ -293,7 +293,7 @@ async def check_test(call: CallbackQuery, callback_data: dict, state: FSMContext
                                   f"1 - savolning javobi a\n"
                                   f"2 - savolning javobi b\n"
                                   f"3 - savolning javobi c bo'ladi.\n\n"
-                                  f"Yuqorida ko'rsatilganidek javoblarni ketma-ketlikda yuboring ❗️")
+                                  f"Yuqorida ko'rsatilganidek javoblarni ketma-ketlikda yuboring ❗️", reply_markup=ReplyKeyboardRemove())
         await state.set_state("result_test")
 
 
