@@ -59,9 +59,10 @@ de_activate_test_buttons = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(text="🚫 Aktivsizlantirish", callback_data='deactivate'),
-            InlineKeyboardButton(text="🔙 Orqaga", callback_data='back_to_actives'),
+            InlineKeyboardButton(text='📊 Statistika', callback_data="statistics"),
         ],
         [
+            InlineKeyboardButton(text="🔙 Orqaga", callback_data='back_to_actives'),
             InlineKeyboardButton(text='❌', callback_data="back_to_admin_panel")
         ]
     ],
