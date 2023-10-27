@@ -132,7 +132,7 @@ async def remove_class_list(msg: types.Message, state: FSMContext):
 async def err_send_message(msg: types.Message):
     try:
         await msg.answer(msg.photo[-1].file_id)
-    except AttributeError:
+    except (AttributeError, IndexError):
         await msg.answer(msg.document.file_id)
 
 
