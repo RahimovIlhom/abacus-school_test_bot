@@ -7,6 +7,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ContentType, CallbackQuery, Message
 from aiogram.utils.exceptions import BadRequest
+from aiogram.types import ReplyKeyboardRemove
 
 from data.config import click_qr, uzum_qr, xazna_qr, ADMINS, karta, karta_name
 from filters import IsPrivate
